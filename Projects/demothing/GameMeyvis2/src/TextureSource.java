@@ -8,6 +8,7 @@ public class TextureSource {
 	BufferedImage goldenflowerspawn;
 	BufferedImage room1floor;
 	BufferedImage Undertaletitle;
+	BufferedImage heart;
 	
 	// boolean title;
 
@@ -36,6 +37,7 @@ public class TextureSource {
 		friskimg[3]=makeImage("friskL.png");
 		goldenflowerspawn=makeImage("goldenflowerspawn.png");
 		room1floor=makeImage("room1floor.png");
+		heart=makeImage("heart.png");
 	}
 	private BufferedImage makeImage(String path){
 		try{

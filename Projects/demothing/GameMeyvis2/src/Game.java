@@ -42,17 +42,28 @@ public class Game extends JFrame implements KeyListener{
     
     public int friskx = 300;
     public int frisky = 300;
+    
+    public int hearty;
+    public int heartx;
+    
     int friskspd = 2;
+    int heartspd = 3;
     
     int room1x;
     int room1y;
+    boolean battle = false;
     
-    Room1 room1 = new Room1(friskx, frisky, room1x, room1y); //For Class room1
+    String room = "room1";
+    
+    public int player_to_worldx;
+    public int player_to_worldy;
+    
+    Room1 room1 = new Room1(friskx, frisky, room1x, room1y,player_to_worldx,player_to_worldy); //For Class room1
     AudioSource audio = new AudioSource();
     
     TextureSource textures = new TextureSource();
     
-    String room = "room1";
+    
     
     ArrayList<Integer> keys = new ArrayList<>(); //Smoothkeys
     
@@ -187,28 +198,48 @@ public class Game extends JFrame implements KeyListener{
   
     		switch(keys.get(i)) {
     		case KeyEvent.VK_UP:
-    			friskdirUP = true;
-        		frisky-=friskspd;
-        		//friskimg = "friskUP.png";
-        		friskindex=0;
+    			if(battle == false) {
+        			friskdirUP = true;
+            		frisky-=friskspd;
+            		//friskimg = "friskUP.png";
+            		friskindex=0;
+    			}
+    			if(battle == true) {
+    				hearty-=heartspd;
+    			}
         		break;
         	case KeyEvent.VK_DOWN:
-        		friskdirDOWN = true;
-        		frisky+=friskspd;
-        		//friskimg = "frisk.png";
-        		friskindex=1;
+        		if(battle == false) {
+            		friskdirDOWN = true;
+            		frisky+=friskspd;
+            		//friskimg = "frisk.png";
+            		friskindex=1;
+        		}
+        		
+        		if(battle == true) {
+        			hearty+=heartspd;
+        		}
         		break;
         	case KeyEvent.VK_RIGHT:
-        		friskdirR = true;
-        		friskx+=friskspd;
-            	//friskimg = "friskR.png";
-        		friskindex=2;
+        		if(battle == false) {
+            		friskdirR = true;
+            		friskx+=friskspd;
+                	//friskimg = "friskR.png";
+            		friskindex=2;
+        		}
+        		
         		break;
         	case KeyEvent.VK_LEFT:
-        		friskdirL = true;
-        		friskx-=friskspd;
-        		//friskimg = "friskL.png";
-        		friskindex=3;
+        		if(battle == false) {
+            		friskdirL = true;
+            		friskx-=friskspd;
+            		//friskimg = "friskL.png";
+            		friskindex=3;
+        		}
+        		
+        		break;
+        	case KeyEvent.VK_F:
+        		battle = true;
         		break;
     		}
     	}
@@ -237,13 +268,16 @@ public class Game extends JFrame implements KeyListener{
         }
         
         
-        /*System.out.println("roomy" + room1y);
-        System.out.println("roomx" + room1x);
-        System.out.println("friskx" + friskx);
-        System.out.println("frisky" + frisky);*/
+        player_to_worldx = friskx + room1x;
+        player_to_worldy = frisky + room1y;
+        //System.out.println("roomy" + room1y);
+       // System.out.println("roomx" + room1x);
+        //System.out.println("friskx" + friskx);
+        System.out.println(player_to_worldx + ", " + player_to_worldy);
         //System.err.println("errorrrrrr");
         frisky=room1.ycollis(friskx, frisky, room1x, room1y); //For class room1
         friskx=room1.xcollis(friskx, frisky, room1x, room1y);
+        
     }
 
     public void keypr(KeyEvent e) {
@@ -279,6 +313,10 @@ public class Game extends JFrame implements KeyListener{
         g.drawImage(textures.room1floor, null, room1x + -300, room1y + -300);
         g.drawImage(textures.goldenflowerspawn, null, room1x + 300, room1y + 300);
         g.drawImage(textures.friskimg[friskindex], null, friskx, frisky);
+        
+        if(battle == true) {
+        	g.drawImage(textures.heart, null, heartx, hearty);
+        }
         
         
         
