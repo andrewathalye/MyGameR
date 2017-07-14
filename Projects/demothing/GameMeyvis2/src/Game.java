@@ -42,18 +42,19 @@ public class Game extends JFrame implements KeyListener{
     
     public int friskx = 300;
     public int frisky = 300;
-    int friskspd = 5;
+    int friskspd = 2;
     
     int room1x;
     int room1y;
     
-    Room1 room1 = new Room1(frisky, room1x);
+    Room1 room1 = new Room1(friskx, frisky, room1x, room1y); //For Class room1
+    AudioSource audio = new AudioSource();
     
     TextureSource textures = new TextureSource();
     
     String room = "room1";
     
-    ArrayList<Integer> keys = new ArrayList<>();
+    ArrayList<Integer> keys = new ArrayList<>(); //Smoothkeys
     
     
     private boolean isKeyPressed = false;
@@ -96,6 +97,8 @@ public class Game extends JFrame implements KeyListener{
         
         addKeyListener(this);
         setFocusable(true);
+        
+        audio.play(audio.music0);
     }
     
     public void keyTyped(KeyEvent keyEvent) {
@@ -103,7 +106,7 @@ public class Game extends JFrame implements KeyListener{
     }
     
     public void keyPressed(KeyEvent keyEvent) {
-    	if(!keys.contains(keyEvent.getKeyCode())) {
+    	if(!keys.contains(keyEvent.getKeyCode())) { //Smoothkeys
     		keys.add(keyEvent.getKeyCode());
     	}
     	/*switch(keyEvent.getKeyCode()) {
@@ -157,7 +160,7 @@ public class Game extends JFrame implements KeyListener{
 
     
     public void keyReleased(KeyEvent keyEvent) {
-    	switch(keyEvent.getKeyCode()) {
+    	switch(keyEvent.getKeyCode()) { //Stops player from moving after key being released
     	case KeyEvent.VK_UP:
     		friskdirUP = false;
 			break;
@@ -172,7 +175,7 @@ public class Game extends JFrame implements KeyListener{
     		break;
     	}
     	
-    	for(int i=keys.size()-1; i>=0; i--) {
+    	for(int i=keys.size()-1; i>=0; i--) { //Smoothkeys
     		if(keys.get(i) == keyEvent.getKeyCode()) {
     			keys.remove(i);
     		}
@@ -180,7 +183,7 @@ public class Game extends JFrame implements KeyListener{
     }
     
     private void HandleKeys() {
-    	for(int i = 0; i<keys.size(); i++) {
+    	for(int i = 0; i<keys.size(); i++) { //Movement
   
     		switch(keys.get(i)) {
     		case KeyEvent.VK_UP:
@@ -215,7 +218,7 @@ public class Game extends JFrame implements KeyListener{
         //update current fps
         fps = (int)(1f/dt);
         HandleKeys();
-        //update sprite
+        //Movement on the background, creates fake movement
         if(friskx > 600 && friskdirR == true) {
         	room1x-=friskspd;
         	friskx-=friskspd;
@@ -234,8 +237,13 @@ public class Game extends JFrame implements KeyListener{
         }
         
         
-        System.out.println(room1y);
-        frisky=room1.room1(frisky,room1y);
+        /*System.out.println("roomy" + room1y);
+        System.out.println("roomx" + room1x);
+        System.out.println("friskx" + friskx);
+        System.out.println("frisky" + frisky);*/
+        //System.err.println("errorrrrrr");
+        frisky=room1.ycollis(friskx, frisky, room1x, room1y); //For class room1
+        friskx=room1.xcollis(friskx, frisky, room1x, room1y);
     }
 
     public void keypr(KeyEvent e) {
@@ -334,7 +342,7 @@ public class Game extends JFrame implements KeyListener{
 
 
     public static void main(String[] args){
-        Game game = new Game(1000, 1000, 120);
+        Game game = new Game(1000, 1000, 120); //Game Window propertys
         game.run();
     }
     
