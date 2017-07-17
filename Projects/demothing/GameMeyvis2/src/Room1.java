@@ -18,10 +18,11 @@ public class Room1 {
 		
 	}
 	
-	public void WallY(int player_to_worldx, int player_to_worldy, int friskx, int frisky) {
-		if(player_to_worldx == friskx && player_to_worldy == frisky) {
+	public int WallY(int player_to_worldy) {
+		if(player_to_worldy == frisky) {
 			frisky = player_to_worldy;
 		}
+		return frisky;
 	}
 	
 	public int ycollis(int nfriskx, int nfrisky,int nroom1x, int nroom1y) {

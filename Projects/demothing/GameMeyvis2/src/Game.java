@@ -40,8 +40,8 @@ public class Game extends JFrame implements KeyListener{
     private float x2 = 50.0f;
     private float v2 = 100.0f;
     
-    public int friskx = 300;
-    public int frisky = 300;
+    public int friskx = 500;
+    public int frisky = 400;
     
     public int hearty;
     public int heartx;
@@ -200,7 +200,8 @@ public class Game extends JFrame implements KeyListener{
     		case KeyEvent.VK_UP:
     			if(battle == false) {
         			friskdirUP = true;
-            		frisky-=friskspd;
+            		//frisky-=friskspd;
+        			room1y+=friskspd;
             		//friskimg = "friskUP.png";
             		friskindex=0;
     			}
@@ -211,7 +212,8 @@ public class Game extends JFrame implements KeyListener{
         	case KeyEvent.VK_DOWN:
         		if(battle == false) {
             		friskdirDOWN = true;
-            		frisky+=friskspd;
+            		//frisky+=friskspd;
+            		room1y-=friskspd;
             		//friskimg = "frisk.png";
             		friskindex=1;
         		}
@@ -223,7 +225,8 @@ public class Game extends JFrame implements KeyListener{
         	case KeyEvent.VK_RIGHT:
         		if(battle == false) {
             		friskdirR = true;
-            		friskx+=friskspd;
+            		//friskx+=friskspd;
+            		room1x-=friskspd;
                 	//friskimg = "friskR.png";
             		friskindex=2;
         		}
@@ -232,7 +235,8 @@ public class Game extends JFrame implements KeyListener{
         	case KeyEvent.VK_LEFT:
         		if(battle == false) {
             		friskdirL = true;
-            		friskx-=friskspd;
+            		//friskx-=friskspd;
+            		room1x+=friskspd;
             		//friskimg = "friskL.png";
             		friskindex=3;
         		}
@@ -250,7 +254,7 @@ public class Game extends JFrame implements KeyListener{
         fps = (int)(1f/dt);
         HandleKeys();
         //Movement on the background, creates fake movement
-        if(friskx > 600 && friskdirR == true) {
+        /*if(friskx > 600 && friskdirR == true) {
         	room1x-=friskspd;
         	friskx-=friskspd;
         }
@@ -258,14 +262,14 @@ public class Game extends JFrame implements KeyListener{
         	room1x+=friskspd;
         	friskx+=friskspd;
         }
-        if(frisky < 100 && friskdirUP == true) {
+        if(frisky < 97 && friskdirUP == true) {
         	room1y+=friskspd;
         	frisky+=friskspd;
         }
-        if(frisky > 600 && friskdirDOWN == true) {
+        if(frisky > 605 && friskdirDOWN == true) {
         	room1y-=friskspd;
         	frisky-=friskspd;
-        }
+        }*/
         
         
         player_to_worldx = friskx + room1x;
@@ -273,14 +277,53 @@ public class Game extends JFrame implements KeyListener{
         //System.out.println("roomy" + room1y);
        // System.out.println("roomx" + room1x);
         //System.out.println("friskx" + friskx);
-        System.out.println(player_to_worldx + ", " + player_to_worldy);
+       //System.out.println("PTW:" + player_to_worldx + ", " + player_to_worldy);
+        System.out.println("room1:" + room1x + ", " + room1y);
         //System.err.println("errorrrrrr");
         frisky=room1.ycollis(friskx, frisky, room1x, room1y); //For class room1
         friskx=room1.xcollis(friskx, frisky, room1x, room1y);
         
+        
+        //if(player_to_worldy == 214 && frisky <= 100) {
+		//	frisky = 100;
+		//}
+        //if(player_to_worldy == 498 && frisky >= 602) {
+		//	frisky = 602;
+		//}
+        //if(player_to_worldx == 680 && player_to_worldy == 552 && frisky <= 604 && friskx >= 308) {
+		//	friskx = 308;
+		//}
+        
+        
+        if(room1y >= 414) {
+        	room1y = 414;
+        }
+        if(room1y <= -306) {
+        	room1y = -306;
+        }
+        if(room1y >= 308 && room1x >= 172 && room1x <= 180) {
+        	room1x = 172;
+        }
+        if(room1y >= 296 && room1x >= 175) {
+        	room1y = 296;
+        }
+        if(room1x >= 318) {
+        	room1x = 318;
+        }
+        if(room1x <= -768) {
+        	room1x = -768;
+        }
+        if(room1x <= -630 && room1y >= 308 && room1x >= -635) {
+        	room1x = -630;
+       }
+        if(room1x <= -635 && room1y >= 300) {
+        	room1y = 308;
+       }
     }
 
-    public void keypr(KeyEvent e) {
+    
+
+	public void keypr(KeyEvent e) {
         isKeyPressed = true;
     }
     
