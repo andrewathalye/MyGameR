@@ -40,11 +40,12 @@ public class Game extends JFrame implements KeyListener{
     private float x2 = 50.0f;
     private float v2 = 100.0f;
     
-    public int friskx = 500;
-    public int frisky = 400;
+    public int friskx = 300;
+    public int frisky = 300;
     
-    public int hearty;
-    public int heartx;
+    public int heartx = 500;
+    public int hearty = 600;
+    public boolean battleturn = true;
     
     int friskspd = 2;
     int heartspd = 3;
@@ -59,6 +60,7 @@ public class Game extends JFrame implements KeyListener{
     public int player_to_worldy;
     
     Room1 room1 = new Room1(friskx, frisky, room1x, room1y,player_to_worldx,player_to_worldy); //For Class room1
+    Combat combat = new Combat(heartx, hearty);
     AudioSource audio = new AudioSource();
     
     TextureSource textures = new TextureSource();
@@ -195,56 +197,61 @@ public class Game extends JFrame implements KeyListener{
     
     private void HandleKeys() {
     	for(int i = 0; i<keys.size(); i++) { //Movement
-  
-    		switch(keys.get(i)) {
-    		case KeyEvent.VK_UP:
-    			if(battle == false) {
-        			friskdirUP = true;
-            		//frisky-=friskspd;
-        			room1y+=friskspd;
-            		//friskimg = "friskUP.png";
-            		friskindex=0;
+    		if(title == false) {
+    			
+    		
+    			switch(keys.get(i)) {
+    			case KeyEvent.VK_UP:
+    				if(battle == false) {
+    					friskdirUP = true;
+    					frisky-=friskspd;
+    					//friskimg = "friskUP.png";
+    					friskindex=0;
+    				}
+    				if(battle == true) {
+    					hearty-=heartspd;
+    				}
+    				break;
+    			case KeyEvent.VK_DOWN:
+    				if(battle == false) {
+    					friskdirDOWN = true;
+    					frisky+=friskspd;
+    					//friskimg = "frisk.png";
+    					friskindex=1;
+    				}
+    				
+    				if(battle == true) {
+    					hearty+=heartspd;
+    				}
+    				break;
+    			case KeyEvent.VK_RIGHT:
+    				if(battle == false) {
+    					friskdirR = true;
+	            		friskx+=friskspd;
+	            		//friskimg = "friskR.png";
+	            		friskindex=2;
+    				}
+    				if(battle == true) {
+    					heartx+=heartspd;
+    				}
+    				
+    				break;
+    			case KeyEvent.VK_LEFT:
+    				if(battle == false) {
+    					friskdirL = true;
+    					friskx-=friskspd;
+    					//friskimg = "friskL.png";
+    					friskindex=3;
+    				}
+    				if(battle == true) {
+    					heartx-=heartspd;
+    				}
+    				
+    				break;
+    			case KeyEvent.VK_F:
+    				battle = true;
+    				break;
     			}
-    			if(battle == true) {
-    				hearty-=heartspd;
-    			}
-        		break;
-        	case KeyEvent.VK_DOWN:
-        		if(battle == false) {
-            		friskdirDOWN = true;
-            		//frisky+=friskspd;
-            		room1y-=friskspd;
-            		//friskimg = "frisk.png";
-            		friskindex=1;
-        		}
-        		
-        		if(battle == true) {
-        			hearty+=heartspd;
-        		}
-        		break;
-        	case KeyEvent.VK_RIGHT:
-        		if(battle == false) {
-            		friskdirR = true;
-            		//friskx+=friskspd;
-            		room1x-=friskspd;
-                	//friskimg = "friskR.png";
-            		friskindex=2;
-        		}
-        		
-        		break;
-        	case KeyEvent.VK_LEFT:
-        		if(battle == false) {
-            		friskdirL = true;
-            		//friskx-=friskspd;
-            		room1x+=friskspd;
-            		//friskimg = "friskL.png";
-            		friskindex=3;
-        		}
-        		
-        		break;
-        	case KeyEvent.VK_F:
-        		battle = true;
-        		break;
     		}
     	}
     }
@@ -254,7 +261,7 @@ public class Game extends JFrame implements KeyListener{
         fps = (int)(1f/dt);
         HandleKeys();
         //Movement on the background, creates fake movement
-        /*if(friskx > 600 && friskdirR == true) {
+        if(friskx > 600 && friskdirR == true) {
         	room1x-=friskspd;
         	friskx-=friskspd;
         }
@@ -262,68 +269,60 @@ public class Game extends JFrame implements KeyListener{
         	room1x+=friskspd;
         	friskx+=friskspd;
         }
-        if(frisky < 97 && friskdirUP == true) {
+        if(frisky < 100 && friskdirUP == true) {
         	room1y+=friskspd;
         	frisky+=friskspd;
         }
-        if(frisky > 605 && friskdirDOWN == true) {
+        if(frisky > 600 && friskdirDOWN == true) {
         	room1y-=friskspd;
         	frisky-=friskspd;
-        }*/
+        }
         
+        if(battle == true) { //Battle
+        	
+        	//Buttons
+        	
+        	if(battleturn == true) {
+        		//Walls
+            	if(heartx <= 326) {
+        			heartx = 326;
+        		}
+        		
+        		if(hearty <= 420) {
+        			hearty = 420;
+        		}
+        		
+        		if(heartx >= 680) {
+        			heartx = 680;
+        		}
+        		if(hearty >= 777) {
+        			hearty = 777;
+        		}
+        	}
+        	
+    		
+        }
+       
         
         player_to_worldx = friskx + room1x;
         player_to_worldy = frisky + room1y;
         //System.out.println("roomy" + room1y);
        // System.out.println("roomx" + room1x);
         //System.out.println("friskx" + friskx);
-       //System.out.println("PTW:" + player_to_worldx + ", " + player_to_worldy);
-        System.out.println("room1:" + room1x + ", " + room1y);
+        System.out.println(heartx + ", " + hearty);
         //System.err.println("errorrrrrr");
         frisky=room1.ycollis(friskx, frisky, room1x, room1y); //For class room1
         friskx=room1.xcollis(friskx, frisky, room1x, room1y);
         
-        
-        //if(player_to_worldy == 214 && frisky <= 100) {
-		//	frisky = 100;
-		//}
-        //if(player_to_worldy == 498 && frisky >= 602) {
-		//	frisky = 602;
-		//}
-        //if(player_to_worldx == 680 && player_to_worldy == 552 && frisky <= 604 && friskx >= 308) {
-		//	friskx = 308;
-		//}
+        //room1.WallY(58, 52, 214);
+        //if(battle == true) {
+        //	combat.Wall();
+        //}
         
         
-        if(room1y >= 414) {
-        	room1y = 414;
-        }
-        if(room1y <= -306) {
-        	room1y = -306;
-        }
-        if(room1y >= 308 && room1x >= 172 && room1x <= 180) {
-        	room1x = 172;
-        }
-        if(room1y >= 296 && room1x >= 175) {
-        	room1y = 296;
-        }
-        if(room1x >= 318) {
-        	room1x = 318;
-        }
-        if(room1x <= -768) {
-        	room1x = -768;
-        }
-        if(room1x <= -630 && room1y >= 308 && room1x >= -635) {
-        	room1x = -630;
-       }
-        if(room1x <= -635 && room1y >= 300) {
-        	room1y = 308;
-       }
     }
 
-    
-
-	public void keypr(KeyEvent e) {
+    public void keypr(KeyEvent e) {
         isKeyPressed = true;
     }
     
@@ -353,13 +352,29 @@ public class Game extends JFrame implements KeyListener{
         g.setColor(Color.GREEN);
         g.drawString(Long.toString(fps), 10, 40);
         
-        g.drawImage(textures.room1floor, null, room1x + -300, room1y + -300);
-        g.drawImage(textures.goldenflowerspawn, null, room1x + 300, room1y + 300);
-        g.drawImage(textures.friskimg[friskindex], null, friskx, frisky);
         
-        if(battle == true) {
-        	g.drawImage(textures.heart, null, heartx, hearty);
+        if(title == false) {
+        	
+        	if(battle == false) {
+            	g.drawImage(textures.room1floor, null, room1x + -300, room1y + -300);
+                g.drawImage(textures.goldenflowerspawn, null, room1x + 300, room1y + 300);
+                g.drawImage(textures.friskimg[friskindex], null, friskx, frisky);
+            }
+            
+            if(battle == true) {
+            	
+            	if(battleturn == true) {
+            		g.drawImage(textures.heart, null, heartx, hearty);
+                	g.drawImage(textures.combat_box, null, 300, 400);
+            	}
+            	g.drawImage(textures.combat_fight, null, 0, 850);
+            	g.drawImage(textures.combat_act, null, 250, 850);
+            	g.drawImage(textures.combat_item, null, 500, 850);
+            	g.drawImage(textures.combat_mercy, null, 750, 850);
+            }
+            
         }
+        
         
         
         

@@ -9,6 +9,11 @@ public class TextureSource {
 	BufferedImage room1floor;
 	BufferedImage Undertaletitle;
 	BufferedImage heart;
+	BufferedImage combat_box;
+	BufferedImage combat_fight;
+	BufferedImage combat_act;
+	BufferedImage combat_item;
+	BufferedImage combat_mercy;
 	
 	// boolean title;
 
@@ -38,6 +43,11 @@ public class TextureSource {
 		goldenflowerspawn=makeImage("goldenflowerspawn.png");
 		room1floor=makeImage("room1floor.png");
 		heart=makeImage("heart.png");
+		combat_box=makeImage("combat_box.png");
+		combat_fight=makeImage("combat_fight.png");
+		combat_act=makeImage("combat_act.png");
+		combat_item=makeImage("combat_item.png");
+		combat_mercy=makeImage("combat_mercy.png");
 	}
 	private BufferedImage makeImage(String path){
 		try{
