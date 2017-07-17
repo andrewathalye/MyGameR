@@ -14,6 +14,10 @@ public class TextureSource {
 	BufferedImage combat_act;
 	BufferedImage combat_item;
 	BufferedImage combat_mercy;
+	BufferedImage Quittingdot;
+	BufferedImage Quittingdotdot;
+	BufferedImage Quittingdotdotdot;
+	BufferedImage[] Quitting = new BufferedImage[3];
 	
 	// boolean title;
 
@@ -48,6 +52,9 @@ public class TextureSource {
 		combat_act=makeImage("combat_act.png");
 		combat_item=makeImage("combat_item.png");
 		combat_mercy=makeImage("combat_mercy.png");
+		Quitting[0]=makeImage("Quittingdot.png");
+		Quitting[1]=makeImage("Quittingdotdot.png");
+		Quitting[2]=makeImage("Quittingdotdotdot.png");
 	}
 	private BufferedImage makeImage(String path){
 		try{

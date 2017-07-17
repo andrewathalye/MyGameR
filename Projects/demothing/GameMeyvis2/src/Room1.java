@@ -18,16 +18,11 @@ public class Room1 {
 		
 	}
 	
-	public void WallX(int player_to_worldx, int player_to_worldx2, int player_to_worldy) {
-		
-		for(int ptw = player_to_worldx; ptw < player_to_worldx2; ptw++) {
-			if(ptw == friskx && player_to_worldy == frisky) {
-				frisky = player_to_worldy;
-			}
-		//if(player_to_worldx == friskx && player_to_worldy == frisky) {
-		//	frisky = player_to_worldy;
-		//}
+	public int WallY(int player_to_worldy) {
+		if(player_to_worldy == frisky) {
+			frisky = player_to_worldy;
 		}
+		return frisky;
 	}
 	
 	public int ycollis(int nfriskx, int nfrisky,int nroom1x, int nroom1y) {
